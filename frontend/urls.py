@@ -6,4 +6,5 @@ urlpatterns = [
   
     path('',index),
     #path('Select_Model',index)
+    path('model/tensorflow', index),
 ]
