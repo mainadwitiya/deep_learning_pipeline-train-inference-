@@ -5,5 +5,5 @@ from .views import index
 urlpatterns = [
   
     path('',index),
-    path('Select_Model',index)
+    #path('Select_Model',index)
 ]
