@@ -1,6 +1,10 @@
 from django.db import models
 import string,random
 import os
+import tensorflow as tf
+from google.protobuf import text_format
+from object_detection.protos import pipeline_pb2
+
 # Create your models here.
 
 # class Model_Data(models.Model):
@@ -15,8 +19,10 @@ import os
 #         while True:
 #             model_id=''.join(random.choices(string.ascii_uppercase,k=length))
 #             if Model_Data.objects.filter(model_id=model_id).count()==0:
-#                 break
-            
+#                import argparse
+
+
+
 #         return model_id
 
   
