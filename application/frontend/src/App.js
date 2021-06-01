@@ -1,14 +1,23 @@
-import "./App.css";
-import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 
-export default class connectionExample extends Component {
-  componentDidMount() {
-    const apiUrl = "https://127.0.0.1:8000/models/";
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  }
-  render() {
-    return <div>Sample connection banaya hai</div>;
-  }
-}
+import "./App.css";
+import Layout from "./components/layout/Layout";
+import HomePage from "./pages/HomePage";
+import ModelPage from "./pages/ModelPage";
+
+const App = () => {
+  return (
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/model">
+          <ModelPage />
+        </Route>
+      </Switch>
+    </Layout>
+  );
+};
+
+export default App;
