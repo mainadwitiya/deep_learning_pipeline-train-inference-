@@ -1,18 +1,63 @@
 import { Fragment, useState } from "react";
-import { Route, useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
+import { Route } from "react-router";
+// import { Link } from "react-router-dom";
+import axios from "axios";
 import ModelForm from "../components/model/ModelForm";
 
 const Model = () => {
-  const matchRte = useRouteMatch();
-
-  const [arch, setArch] = useState("");
+  // const location = useLocation();
+  const [data, setData] = useState({
+    usecase_type: "object-detection", //object-detection / classification
+    framework_type: "tensorflow", // tensorflow, keras, pytorch
+    model_arch_type: "", // resnet, fasterRcnn
+    training_file: "",
+    validation_file: "",
+    label_file: "",
+  });
 
   const archChangeHandler = (e) => {
-    setArch(e.target.value);
-    console.log(e.target.value);
+    setData({ ...data, model_arch_type: e.target.value });
+    // console.log(e.target.value);
   };
 
+  const trainingFileHandler = (e) => {
+    setData({ ...data, training_file: e.target.files[0] });
+  };
+
+  const validationFileHandler = (e) => {
+    setData({ ...data, validation_file: e.target.files[0] });
+  };
+
+  const labelFileHandler = (e) => {
+    setData({ ...data, label_file: e.target.files[0] });
+  };
+
+  const submitDataHandler = (e) => {
+    e.preventDefault();
+
+    let form_data = new FormData();
+    form_data.append("training_data", data.training_file);
+    form_data.append("test_data", data.validation_file);
+    form_data.append("label_file_data", data.label_file);
+    form_data.append("model_arch_type", data.model_arch_type);
+    form_data.append("usecase_type", data.usecase_type);
+    form_data.append("framework_type", data.framework_type);
+
+    let url = "http://127.0.0.1:8000/apis/model_records/";
+
+    axios
+      .post(url, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  console.log(data);
   return (
     <Fragment>
       <div className="container">
@@ -20,8 +65,12 @@ const Model = () => {
         <div className="row">
           <div className="col-6 offset-3">
             {/* Model Form Component */}
-            <ModelForm />
-            <Route path={`${matchRte.path}/select-arch`}>
+            <ModelForm
+              onUploadTrainingFile={trainingFileHandler}
+              onUploadValidationFile={validationFileHandler}
+              onUploadLabelFile={labelFileHandler}
+            />
+            <Route path={"/model/tensorflow/select-arch"}>
               <div className="card mt-4">
                 <div className="card-header">
                   <h4 className="text-left mb-0">TF Architecture</h4>
@@ -40,7 +89,7 @@ const Model = () => {
                               type="radio"
                               name="architecture"
                               className="architecture"
-                              value="Fasterrcnn"
+                              value="fasterrcnn"
                               onClick={archChangeHandler}
                               aria-label="Radio button for following text input"
                             />
@@ -57,7 +106,7 @@ const Model = () => {
                               type="radio"
                               name="architecture"
                               className="architecture"
-                              value="Centernet"
+                              value="centernet"
                               onClick={archChangeHandler}
                               aria-label="Radio button for following text input"
                             />
@@ -69,15 +118,22 @@ const Model = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-right mt-4">
-                <Link
-                  to={`/architecture?arch=${arch}`}
+            </Route>
+            <div className="text-right mt-4">
+              {/* <Link
+                  to={`/architecture?arch=${data.arch_type}`}
                   className="btn btn-primary px-4"
                 >
                   proceed
-                </Link>
-              </div>
-            </Route>
+                </Link> */}
+              <button
+                onClick={submitDataHandler}
+                className="btn btn-primary px-4"
+                type="submit"
+              >
+                submit
+              </button>
+            </div>
           </div>
         </div>
       </div>

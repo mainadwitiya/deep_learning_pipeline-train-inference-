@@ -37,7 +37,8 @@ def create_path(instance,usecase_type):
 def group_based_upload_to(instance, filename):
     return "post_data/{}/{}".format(instance.usecase_type, filename)
 
-    
+
+
 class Model_Post(models.Model):
     
     #model_id = model_type=models.CharField(max_length=100)
@@ -50,3 +51,9 @@ class Model_Post(models.Model):
     
     def __str__(self):
         return self.title
+
+
+
+class Tf_Config_File_Post(models.Model):
+    label_file_data= models.FileField(upload_to=group_based_upload_to)
+    
