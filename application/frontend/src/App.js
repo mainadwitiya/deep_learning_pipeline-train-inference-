@@ -4,6 +4,7 @@ import "./App.css";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import ModelPage from "./pages/ModelPage";
+import FileEditor from "./pages/FileEditor";
 
 const App = () => {
   return (
@@ -14,6 +15,9 @@ const App = () => {
         </Route>
         <Route path="/model">
           <ModelPage />
+        </Route>
+        <Route path="/tf_config_file_edited">
+          <FileEditor />
         </Route>
       </Switch>
     </Layout>
