@@ -2,3 +2,5 @@
 
 # dependencies
 /post_data
+/models
+/apis/tf_base_od_models

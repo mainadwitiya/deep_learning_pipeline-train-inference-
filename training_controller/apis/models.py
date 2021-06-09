@@ -1,6 +1,7 @@
 from django.db import models
 import string,random
 import os
+import uuid
 
 
 
@@ -26,21 +27,23 @@ import os
 
   
 def user_directory_path(usecase_type):
-    return 'post_data/'+str(usecase_type)
+    return 'post_data/'+str(id)
 
 
 def create_path(instance,usecase_type):
     print(usecase_type)
     #print(os.path.join('post_data',model_id))
-    return os.path.join('post_data',usecase_type)
+    return os.path.join('post_data',id)
 
 def group_based_upload_to(instance, filename):
-    return "post_data/{}/{}".format(instance.usecase_type, filename)
+    
+
+    return "apis/post_data/{}/{}".format(instance.uniqueid, filename)
 
 
 
 class Model_Post(models.Model):
-    
+    uniqueid = uuid.uuid1()
     #model_id = model_type=models.CharField(max_length=100)
     usecase_type = models.CharField(max_length=100)
     framework_type = models.CharField(max_length=100)
@@ -49,11 +52,20 @@ class Model_Post(models.Model):
     test_data = models.FileField(upload_to=group_based_upload_to)
     label_file_data= models.FileField(upload_to=group_based_upload_to)
     
-    def __str__(self):
-        return self.title
+    def make_uuid_value(self):
+        return self.uniqueid
+
+    def json_file_info_save(self,usecase_type,framework_type,model_arch_type,uniqueid):
+        info_dict={'usecase_type':usecase_type,'framework_type':framework_type,'model_arch_type':model_arch_type}
+        
+        return info_dict
+        
 
 
-
-class Tf_Config_File_Post(models.Model):
-    label_file_data= models.FileField(upload_to=group_based_upload_to)
+# class Tf_Config_File_Post(models.Model):
+#     uniqueid = models.CharField(max_length=100)
+#     label_file_data= models.FileField(upload_to=group_based_upload_to)
     
+
+
+ 
