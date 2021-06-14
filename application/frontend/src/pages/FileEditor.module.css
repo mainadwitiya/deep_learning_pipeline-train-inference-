@@ -1,0 +1,14 @@
+.mainRoot {
+  font-family: "Helvetica", sans-serif;
+  padding: 20px;
+  width: 100%;
+}
+
+.editor {
+  border: 1px solid #ccc;
+  min-height: 80vh;
+  cursor: text;
+  min-height: 80;
+  padding: 10px;
+  overflow: scroll;
+}

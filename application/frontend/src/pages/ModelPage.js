@@ -1,10 +1,14 @@
-import { Fragment, useState } from "react";
-import { Route } from "react-router";
+import { Fragment, useState, useContext } from "react";
+import { Route, useHistory } from "react-router";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import ModelForm from "../components/model/ModelForm";
+import FileContext from "../components/utils/FileContext";
 
 const Model = () => {
+  const history = useHistory();
+  const [fileContext, setFileContext] = useContext(FileContext);
+
   // const location = useLocation();
   const [data, setData] = useState({
     usecase_type: "object-detection", //object-detection / classification
@@ -52,7 +56,11 @@ const Model = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        const data = res.data;
+        setFileContext(data);
+        console.log(fileContext);
+        history.replace("/tf_config_file");
       })
       .catch((err) => console.log(err));
   };

@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/model">
           <ModelPage />
         </Route>
-        <Route path="/tf_config_file_edited">
+        <Route path="/tf_config_file">
           <FileEditor />
         </Route>
       </Switch>
