@@ -4,12 +4,20 @@ import { ContentState, convertToRaw, Editor, EditorState } from "draft-js";
 import file from "./hello.txt";
 
 const FileEditor = (props) => {
-  let _contentState = ContentState.createFromText(file);
+  let file_text = "";
+  fetch(file)
+    .then((r) => r.text())
+    .then((text) => {
+      console.log("text decoded:", text);
+      file_text = text;
+    });
+  // console.log(file);
+  let _contentState = ContentState.createFromText(toString(file_text));
   const raw = convertToRaw(_contentState);
   const [contentState, setContentState] = React.useState(raw);
 
   const [editorState, setEditorState] = React.useState(
-    EditorState.createWithContent()
+    EditorState.createEmpty()
   );
 
   const editor = React.useRef(null);
@@ -28,9 +36,9 @@ const FileEditor = (props) => {
       <div onClick={focusEditor}>
         <Editor
           ref={editor}
-          // editorState={editorState}
-          defaultContentState={contentState}
-          onContentStateChange={setContentState}
+          editorState={editorState}
+          // defaultContentState={contentState}
+          // onContentStateChange={setContentState}
           onChange={(editorState) => setEditorState(editorState)}
         />
       </div>

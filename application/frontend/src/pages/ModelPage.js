@@ -1,10 +1,11 @@
 import { Fragment, useState } from "react";
-import { Route } from "react-router";
+import { Route, useHistory } from "react-router";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import ModelForm from "../components/model/ModelForm";
 
 const Model = () => {
+  let history = useHistory();
   // const location = useLocation();
   const [data, setData] = useState({
     usecase_type: "object-detection", //object-detection / classification
@@ -53,6 +54,8 @@ const Model = () => {
       })
       .then((res) => {
         console.log(res.data);
+        history.replace("/tf_config_file_edited");
+        //<Redirect to={{ pathname: "/tf_config_file_edited" }} />;
       })
       .catch((err) => console.log(err));
   };

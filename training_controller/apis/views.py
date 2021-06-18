@@ -89,7 +89,7 @@ class PostView_Model_Selection_TF(APIView):
             print('yyyyyyyyyyyyyyyyyyyyyyyy',label_path)
             checkpoint_path=get_original_checkpoint_files(posts_serializer.data['model_arch_type'])
             
-            print('zzzzzzzzzzzzzzzzzzzzz',checkpoint_path)
+            
             train_record_file=posts_serializer.data['training_data']
             test_record_file=posts_serializer.data['test_data']
             final_config_file_path=new_path='/'+test_record_file.split('/')[1]+'/'+test_record_file.split('/')[2]+'/'
@@ -104,7 +104,7 @@ class PostView_Model_Selection_TF(APIView):
             img = open(final_path, 'rb')
             response = FileResponse(img)
             print(response)
-            print('Sahi se upload hui image')
+           
             return response  
         else:
             print('error', posts_serializer.errors)

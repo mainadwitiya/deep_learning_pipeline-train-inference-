@@ -4,7 +4,7 @@ import "./App.css";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import ModelPage from "./pages/ModelPage";
-import FileEditor from "./pages/FileEditor";
+import FileEditor from "./pages/RichTextEditor";
 
 const App = () => {
   return (
